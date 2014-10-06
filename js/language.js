@@ -6,6 +6,9 @@
 	this.action.executeOn(machine);
 	machine.finish();
     };
+    Program.prototype.toString = function(){
+	return 'var p;\nwith($.language){\n\tp = program(' + this.action.toString() + ');\n}'
+    };
 
     var Sequence = function(actions){
 	this.actions = actions;
@@ -15,20 +18,35 @@
 	    action.executeOn(machine);
 	});
     };
+    Sequence.prototype.toString = function(){
+	var result = 'sequence('
+	result += this.actions.map(function(action){ return action.toString(); }).join(',');
+	result += ')';
+	return result;
+    };
 
     var Left = function(){};
     Left.prototype.executeOn = function(machine){
 	machine.left();
+    };
+    Left.prototype.toString = function(){
+	return 'left()';
     };
 
     var Right = function(){};
     Right.prototype.executeOn = function(machine){
 	machine.right();
     };
+    Right.prototype.toString = function(){
+	return 'right()';
+    };
 
     var Forward = function(){};
     Forward.prototype.executeOn = function(machine){
 	machine.forward();
+    };
+    Forward.prototype.toString = function(){
+	return 'forward()';
     };
 
     var language = $.language = {};

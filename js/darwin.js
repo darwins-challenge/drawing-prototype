@@ -13,4 +13,5 @@
 	action: [ 1/6, 2/6, 5/6 ]
     });
     p.executeOn(new $.Machine(context));
+    console.log(p.toString());
 })(window);

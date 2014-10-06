@@ -37,4 +37,36 @@
     language.left     = function(){ return new Left(); };
     language.right    = function(){ return new Right(); };
     language.forward  = function(){ return new Forward(); };
+
+    var random = $.language.random = {};
+    (function(_){
+	var randomProgram = function(distribution){
+	    distribution = distribution || {};
+	    distribution.sequence = distribution.sequence || 3/4;
+	    distribution.action = distribution.action || [1/4, 2/4, 3/4];
+	    return new Program(randomSequence(distribution));
+	};
+	var randomSequence = function(distribution){
+	    var actions = [];
+	    while (Math.random() < distribution.sequence) {
+		actions.push(randomAction(distribution));
+	    }
+	    return new Sequence(actions);
+	};
+	var randomAction = function(distribution){
+	    var p = Math.random();
+	    if (p < distribution.action[0]) {
+		return new Left();
+	    }
+	    if (p < distribution.action[1]) {
+		return new Right();
+	    }
+	    if (p < distribution.action[2]) {
+		return new Forward();
+	    }
+	    return randomSequence(distribution);
+	}
+
+	_.program = randomProgram;
+    })(random);
 })(window);

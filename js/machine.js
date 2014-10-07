@@ -23,6 +23,7 @@
 	this.initialize();
     };
     Machine.prototype.initialize = function(){
+	this.ctx.save();
 	this.ctx.beginPath();
 	this.ctx.moveTo(this.current.x, this.current.y);
     };
@@ -41,6 +42,7 @@
     };
     Machine.prototype.finish = function(){
 	this.ctx.stroke();
+	this.ctx.restore();
 	this.initialize();
 	return this;
     }

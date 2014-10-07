@@ -26,7 +26,8 @@
 	var angle = 360 * (index/programs.length);
 	p.executeOn(new $.Machine(context, {
 	    size: 10,
-	    color: 'hsl(' + angle + ',100%,50%)'
+	    color: 'hsl(' + angle + ',100%,50%)',
+	    x: index, y: index
 	}));
     });
 })(window);

@@ -15,17 +15,19 @@
 
     var defaultSize = 10;
     var defaultColor = '#000000';
+    var defaultX = 0;
+    var defaultY = 0;
 
     var Machine = $.Machine = function(ctx, options) {
-	this.options = options || { size : defaultSize, color : defaultColor };
+	this.options = options || { size : defaultSize, color : defaultColor, x: defaultX, y: defaultY };
 	this.ctx = ctx;
-	this.current = new Vector(0,0);
+	this.current = new Vector(this.options.x || defaultX, this.options.y || defaultY);
 	this.direction = new Vector(0, this.options.size || defaultSize);
 	this.initialize();
     };
     Machine.prototype.initialize = function(){
 	this.ctx.save();
-	this.ctx.strokeStyle = this.options.color;
+	this.ctx.strokeStyle = this.options.color || defaultColor;
 	this.ctx.beginPath();
 	this.ctx.moveTo(this.current.x, this.current.y);
     };

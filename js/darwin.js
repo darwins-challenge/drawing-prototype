@@ -12,6 +12,9 @@
 	sequence: 3/4,
 	action: [ 1/6, 2/6, 5/6 ]
     });
-    p.executeOn(new $.Machine(context));
+    p.executeOn(new $.Machine(context, {
+	size: 10,
+	color: 'hsl(0,100%,50%)'
+    }));
     console.log(p.toString());
 })(window);

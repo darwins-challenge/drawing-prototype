@@ -14,16 +14,18 @@
     }
 
     var defaultSize = 10;
+    var defaultColor = '#000000';
 
     var Machine = $.Machine = function(ctx, options) {
-	options = options || { size : defaultSize };
+	this.options = options || { size : defaultSize, color : defaultColor };
 	this.ctx = ctx;
 	this.current = new Vector(0,0);
-	this.direction = new Vector(0, options.size || defaultSize);
+	this.direction = new Vector(0, this.options.size || defaultSize);
 	this.initialize();
     };
     Machine.prototype.initialize = function(){
 	this.ctx.save();
+	this.ctx.strokeStyle = this.options.color;
 	this.ctx.beginPath();
 	this.ctx.moveTo(this.current.x, this.current.y);
     };

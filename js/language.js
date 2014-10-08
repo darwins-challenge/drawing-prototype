@@ -62,7 +62,7 @@
 	    distribution = distribution || {};
 	    distribution.sequence = distribution.sequence || 3/4;
 	    distribution.action = distribution.action || [1/4, 2/4, 3/4];
-	    return new Program(randomSequence(distribution));
+	    return $.language.program(randomSequence(distribution));
 	};
 	var randomSequence = function(distribution){
 	    var actions = [];
@@ -74,13 +74,13 @@
 	var randomAction = function(distribution){
 	    var p = Math.random();
 	    if (p < distribution.action[0]) {
-		return new Left();
+		return $.language.left();
 	    }
 	    if (p < distribution.action[1]) {
-		return new Right();
+		return $.language.right();
 	    }
 	    if (p < distribution.action[2]) {
-		return new Forward();
+		return $.language.forward();
 	    }
 	    return randomSequence(distribution);
 	}

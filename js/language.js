@@ -3,8 +3,12 @@
 	this.action = action;
 	this.children = children || [];
     };
-    Node.prototype.executeOn = function(machine) {
+    Node.prototype.executeOn = function(machine){
 	this.action.call(this, machine, this.children);
+    };
+    Node.prototype.visit = function(callback){
+	callback(this);
+	this.children.forEach(function(child){ child.visit(callback); });
     };
 
     var program = function(machine, children){

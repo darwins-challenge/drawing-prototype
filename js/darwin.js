@@ -17,27 +17,27 @@
     context.translate(canvas.width/2, canvas.height/2);
     context.scale(1, -1);
 
-    range(1,10).map(function(){
+    var population = range(1,100).map(function(){
 	return $.language.random.program({
 	    sequence: 3/4,
 	    action: [ 1/6, 2/6, 5/6 ]
 	});
-    }).forEach(function(p, index, programs){
-	var angle = 360 * (index/programs.length);
-	p.executeOn(new $.Machine(context, {
-	    size: 10,
-	    color: 'hsl(' + angle + ',100%,50%)',
-	    x: index, y: index
-	}));
     });
 
-    var p = $.language.random.program();
-    var q = $.language.random.program();
-    var offspring = $.genetics.crossover(p, q);
-    console.log(p.toString());
-    console.log(q.toString());
-    console.log('--');
-    console.log(offspring[0].toString());
-    console.log(offspring[1].toString());
-
+    var interval = setInterval(function(){
+	context.clearRect(-canvas.width/2, -context.height/2, context.width, context.height);
+	population.forEach(function(p, index, programs){
+	    var angle = 360 * (index/programs.length);
+	    p.executeOn(new $.Machine(context, {
+		size: 10,
+		color: 'hsl(' + angle + ',100%,50%)',
+		x: index, y: index
+	    }));
+	});
+	var ip = Math.floor(population.length * Math.random());
+	var iq = Math.floor(population.length * Math.random());
+	var offspring = $.genetics.crossover(population[ip], population[iq]);
+	population[ip] = offspring[0];
+	population[iq] = offspring[1];
+    }, 0);
 })(window);

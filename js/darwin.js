@@ -30,4 +30,22 @@
 	    x: index, y: index
 	}));
     });
+
+    var Counter = function(){
+	this.count = 0;
+    };
+    Counter.prototype.increment = function(){
+	this.count++;
+    };
+    var counter = new Counter();
+
+    var p = $.language.random.program();
+    var q = $.language.random.program();
+    var offspring = $.genetics.crossover(p, q);
+    console.log(p.toString());
+    console.log(q.toString());
+    console.log('--');
+    console.log(offspring[0].toString());
+    console.log(offspring[1].toString());
+
 })(window);

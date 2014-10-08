@@ -10,17 +10,33 @@
 	callback(this);
 	this.children.forEach(function(child){ child.visit(callback); });
     };
+    Node.prototype.copy = function(){
+	var children = this.children.map(function(child){ return child.copy(); });
+	return new Node(this.action, children);
+    };
+    Node.prototype.toString = function(){
+	return this.action.source(this.children);
+    };
 
     var program = function(machine, children){
 	children.forEach(function(child){ child.executeOn(machine); });
 	machine.finish();
     };
+    program.source = function(children){
+	return 'var p;\nwith($.language){\n\tp = program(' + children[0].toString() + ');\n}'
+    };
     var sequence = function(machine, children){
 	children.forEach(function(child){ child.executeOn(machine); });
     };
+    sequence.source = function(children){
+	return 'sequence(' + children.map(function(child){ return child.toString(); }).join(',') + ')';
+    };
     var left = function(machine){ machine.left(); };
+    left.source = function(){ return 'left()'; };
     var right = function(machine){ machine.right(); };
+    right.source = function(){ return 'right()'; };
     var forward = function(machine){ machine.forward(); };
+    forward.source = function(){ return 'forward()'; };
 
     var language = $.language = {};
     language.program  = function(action){ return new Node(program, [action]); };
